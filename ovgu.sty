@@ -42,5 +42,440 @@
 \UpdateBoxColor{note}{red}
 
 % use official logos
-% \fancylogos{upb,upb-triangles}
-% \setpaths{{pics/}{../pics/}}
+\fancylogos{,ovgu}
+\setpaths{{pics/logos/}{../pics/logos/}}
+
+% ---------------------------------------------
+% conference talks
+% ---------------------------------------------
+
+% ignore presenting author in PDF metadata
+\pdfstringdefDisableCommands{\def\underline#1{<#1>}}
+
+% hack to have a more spacious title slide for conference talks
+% also allows for a copyright text
+\makeatletter
+\setbeamercolor{copyrightbox}{fg=white}
+\renewcommand{\@createtitleslide}{
+    {
+    \ifx \fancytitlepicture \empty \else \usebackgroundtemplate{\pic[trim=0 0 0 \fancytitlepictureoffset,clip,width=\paperwidth]{\fancytitlepicture}} \fi
+    \begin{frame}[plain]
+        \vskip0pt plus 1filll
+        \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=.9ex,left]{copyrightbox}
+            \tiny\fancytitlepicturecopyright
+        \end{beamercolorbox}%
+        \ifx \inserttitle \empty
+        \else
+        \ifx \insertsubtitle \empty
+            {\begin{beamercolorbox}[wd=\paperwidth,ht=5ex,dp=2.7ex,right]{titlebox}
+                \LARGE\textbf{\inserttitle}\hspace*{20pt}
+            \end{beamercolorbox}}%
+        \else
+            {\begin{beamercolorbox}[wd=\paperwidth,ht=11ex,dp=3ex,right]{titlebox}
+                \LARGE\textbf{\inserttitle}\hspace*{20pt}
+
+                \vspace{1ex}{\insertsubtitle}\hspace*{20pt}
+            \end{beamercolorbox}}%
+        \fi
+        \fi
+        \nointerlineskip%
+        \begin{beamercolorbox}[wd=\paperwidth,ht=10ex,dp=2.5ex,right]{subtitlebox}
+            \small
+            \ifx \insertdate \empty \else \insertdate \fi\hspace*{20pt}
+
+            \vspace{1ex}\insertauthor\hspace*{20pt}
+
+            \ifx \insertinstitute \empty \else \vspace{1ex}\insertinstitute \fi\hspace*{20pt}
+        \end{beamercolorbox}%
+        \nointerlineskip
+        \begin{beamercolorbox}[wd=\paperwidth,ht=4.5ex,dp=2ex,leftskip=\fancy@titlepage@margin,rightskip=\fancy@titlepage@margin]{logobox}
+            \vspace{-1ex}%
+            \fancy@logoline
+        \end{beamercolorbox}%
+    \end{frame}
+    }
+}
+\renewcommandx{\maketitle}[3][1=,2=150,3=]{
+    \gdef\fancytitlepicture{#1}
+    \gdef\fancytitlepictureoffset{#2}
+    \gdef\fancytitlepicturecopyright{#3}
+    \@createtitleslide
+}
+\makeatother
+
+% ---------------------------------------------
+% feature diagrams
+% ---------------------------------------------
+
+\usepackage{xstring}
+\usepackage{forest}
+\usepackage{xcolor}
+
+\usetikzlibrary{angles,tikzmark,arrows,positioning}
+\definecolor{drawColor}{RGB}{128 128 128}
+
+\newcommand{\circleSize}{0.175em}
+\newcommand{\angleSize}{0.75em}
+
+\forestset{
+	/tikz/mandatory/.style={
+		circle,fill=drawColor,
+		draw=drawColor,
+		inner sep=\circleSize
+	},
+	/tikz/optional/.style={
+		circle,
+		fill=white,
+		draw=drawColor,
+		inner sep=\circleSize
+	},
+	featureDiagram/.style={
+		for tree={
+			text depth = 0,
+			parent anchor = south,
+			child anchor = north,
+			draw = drawColor,
+			edge = {draw=drawColor},
+		}
+	},
+	featureDiagramEmpty/.style={
+	},
+	/tikz/abstract/.style={
+		fill = blue!85!cyan!5,
+		draw = drawColor
+	},
+	/tikz/concrete/.style={
+		fill = blue!85!cyan!20,
+		draw = drawColor
+	},
+	mandatory/.style={
+		edge label={node [mandatory] {} }
+	},
+	optional/.style={
+		edge label={node [optional] {} }
+	},
+	or/.style={
+		tikz+={
+			\path (.parent) coordinate (A) -- (!u.children) coordinate (B) -- (!ul.parent) coordinate (C) pic[fill=drawColor, angle radius=\angleSize]{angle};
+		}	
+	},
+	/tikz/or/.style={
+	},
+	alternative/.style={
+		tikz+={
+			\path (.parent) coordinate (A) -- (!u.children) coordinate (B) -- (!ul.parent) coordinate (C) pic[draw=drawColor, angle radius=\angleSize]{angle};
+		}	
+	},
+	/tikz/alternative/.style={
+	},
+	/tikz/placeholder/.style={
+	},
+	collapsed/.style={
+		rounded corners,
+		no edge,
+		for tree={
+			fill opacity=0,
+			draw opacity=0,
+			l = 0em,
+		}
+	},
+	/tikz/hiddenNodes/.style={
+		midway,
+		rounded corners,
+		draw=drawColor,
+		fill=white,
+		minimum size = 1.2em,
+		minimum width = 0.8em,
+		scale=0.9
+	},
+}
+
+\newcommand{\legend}{
+	\matrix [draw=drawColor,anchor=north west] at (current bounding box.north east) {
+		\node [label=center:\underline{Legend:}] {}; \\
+		\node [abstract,label=right:Abstract Feature] {}; \\
+		\node [concrete,label=right:Concrete Feature] {}; \\
+		\node [mandatory,label=right:Mandatory] {}; \\
+		\node [optional,label=right:Optional] {}; \\
+			\filldraw[drawColor] (0.1,0) - +(-0,-0.2) - +(0.2,-0.2)- +(0.1,0);
+			\draw[drawColor] (0.1,0) -- +(-0.2, -0.4);
+			\draw[drawColor] (0.1,0) -- +(0.2,-0.4);
+			\fill[drawColor] (0,-0.2) arc (240:300:0.2);
+		\node [or,label=right:Or Group] {}; \\
+		\draw[drawColor] (0.1,0) -- +(-0.2, -0.4);
+			\draw[drawColor] (0.1,0) -- +(0.2,-0.4);
+			\draw[drawColor] (0,-0.2) arc (240:300:0.2);
+		\node [alternative,label=right:Alternative Group] {}; \\
+	};
+}
+
+\newcommand{\featureDiagramWithLegend}[1]{
+	\begin{forest}
+		featureDiagram[#1]
+		\matrix [anchor=north west] at (current bounding box.north east) {
+			\node [placeholder] {}; \\
+		};
+		{\small\legend}
+	\end{forest}
+}
+
+\newcommand{\featureDiagram}[1]{
+	\begin{forest}
+		featureDiagram[#1]
+	\end{forest}
+}
+
+\newcommand{\featureDiagramLegend}{
+	\begin{forest}
+		featureDiagramEmpty[]
+		{\small\legend}
+	\end{forest}
+}
+
+\newcommand{\featureDiagramOverlay}[1]{
+	\begin{tikzpicture}[overlay,remember picture]
+		#1
+	\end{tikzpicture}
+}
+
+\newcommand{\featureEmph}[2][draw=black]{
+		\foreach \f in {#2} {
+			\node [fit=\f,fill opacity=0.4,line width=0.6pt,rounded corners,#1] {};
+		}
+}
+
+\newcommand{\featureDeemph}[2][fill=white]{
+	\foreach \f in {#2} {
+		\node [fit=\f,fill opacity=0.4,line width=0.6pt,rounded corners,#1] {};
+	}
+}
+
+\newcommand{\featureSelected}[1]{
+	\featureEmph[fill=green,draw=green,fill opacity=0.1,draw opacity=0.2]{#1}
+}
+
+\newcommand{\featureDeselected}[1]{
+	\featureEmph[fill=red,draw=red,fill opacity=0.1,draw opacity=0.2]{#1}
+}
+
+% ---------------------------------------------
+% code listings
+% ---------------------------------------------
+
+\usepackage{listings}
+\usepackage[normalem]{ulem}
+\tcbuselibrary{listings}
+
+\newcommand{\definelanguage}[2]{
+	\lstdefinelanguage{#1}{#2}
+	\lstnewenvironment{#1}[1][]{\lstset{language=#1,##1}}{}
+	\newtcblisting{#1tight}[2][]{uulm@tightboxstyle={top=-6pt,bottom=-6pt}{##2}{blue}{},listing only,listing options={language=#1,##1}}
+}
+
+% listing style inherited by all languages
+\lstset{
+	numbers=none, % where to put the line-numbers
+	showspaces=false, % show spaces with underscores
+	showstringspaces=false, % underline spaces within strings
+	showtabs=false, % show tabs within strings with underscores
+	tabsize=2, % sets default tabsize to 2 spaces
+	breaklines=true, % sets automatic line breaking
+	breakatwhitespace=false,
+	columns=fullflexible,
+	commentstyle=\color{green},
+	keywordstyle=\color{blue},
+	stringstyle=\color{red},
+}
+
+% language-specific styles
+\definelanguage{code}{
+	moredelim=**[is][\color{red}]{@}{@},
+	moredelim=**[is][\color{green}]{?}{?},
+	moredelim=**[is][\color{blue}]{~}{~},
+	moredelim=[is][\sout]{|}{|},
+	literate={-}{{-}}1,
+}
+
+\definelanguage{uvl}{
+	alsoletter={=, >, |},
+	morekeywords={features, constraints, namespace, mandatory, optional, or, alternative, abstract, =>, |}
+}
+
+\definelanguage{dimacs}{
+	alsoletter={0},
+	morekeywords={p, cnf, 0},
+	morecomment=[f]{c},
+}
+
+\definelanguage{kconfig}{
+	keepspaces=true,
+	morekeywords={config, bool, default, if, help, def_bool, depends, on, select},
+	morecomment=[f]{\#},
+	morestring=*[d]{"},
+	literate={-}{{-}}1,
+}
+
+\definelanguage{cpp}{
+	language=C++,
+	moredelim=**[is][\color{green}\bfseries\itshape]{~}{~},
+	moredelim=[is][\sout]{|}{|},
+}
+
+\definelanguage{shell}{
+	language=bash,
+	moredelim=**[is][\color{red}]{@}{@},
+	moredelim=**[is][\color{green}]{?}{?},
+	moredelim=**[is][\color{blue}]{~}{~},
+}
+
+% ---------------------------------------------
+% QR codes
+% ---------------------------------------------
+
+\newcommand{\usefancyqr}[1]{\usepackage{textpos}
+\makeatletter
+\def\input@path{{#1}}
+\makeatother
+\usepackage{fancyqr}}
+\newcommand{\enableqr}{\makeatletter
+\renewcommand{\@minipagerestore}{\setlength{\parskip}{0pt}}
+\makeatother}
+\newcommand{\disableqr}{\makeatletter
+\renewcommand{\@minipagerestore}{\setlength{\parskip}{1.5ex}}
+\makeatother}
+
+% ---------------------------------------------
+% darkly accented frames
+% ---------------------------------------------
+
+\makeatletter
+\newcommand{\mydark}[1][1]{
+	\def\mydark@width{#1}
+	\setbeamercolor{frametitle}{fg=white}
+	\setbeamercolor{normal text}{fg=white}
+	\usebeamercolor[fg]{normal text}
+	\setbeamertemplate{background canvas}{
+		\begin{tikzpicture}[remember picture,overlay]
+			\shade[top color=ovgured,bottom color=ovguaccent,middle color=ovguaccent,vertical custom shading=65]
+			([shift={(0pt,0pt)}]current page.north west)				rectangle
+			([shift={(\mydark@width\paperwidth,0pt)}]current page.south west);
+		\end{tikzpicture}
+	}
+}
+\newcommand{\mylight}{%
+	\setbeamercolor{normal text}{fg=black}%
+	\usebeamercolor[fg]{normal text}%
+}
+\newcommand{\mylighttitle}{%
+	\mylight%
+	\hspace*{\mydark@width\paperwidth}%
+}
+\tikzset{vertical custom shading/.code={%
+ \pgfmathsetmacro\tikz@vcs@middle{#1}
+ \pgfmathsetmacro\tikz@vcs@bottom{\tikz@vcs@middle/2}
+ \pgfmathsetmacro\tikz@vcs@top{(100-\tikz@vcs@middle)/2+\tikz@vcs@middle}
+\pgfdeclareverticalshading[tikz@axis@top,tikz@axis@middle,tikz@axis@bottom]{newaxis}{100bp}{%
+  color(0bp)=(tikz@axis@bottom);
+  color(\tikz@vcs@bottom bp)=(tikz@axis@bottom);
+  color(\tikz@vcs@middle bp)=(tikz@axis@middle);
+  color(\tikz@vcs@top bp)=(tikz@axis@top);
+  color(100bp)=(tikz@axis@top)}
+  \pgfkeysalso{/tikz/shading=newaxis}
+  }
+}
+\makeatother
+
+% ---------------------------------------------
+% frame headers
+% ---------------------------------------------
+
+\newcommand{\myframetitle}{\insertsubsection{}\ifnum\thesubsubsection=0\else\ -- \insertsubsubsection{}\fi}
+\newcommand{\myframeicon}[1]{%
+	\begin{tikzpicture}[remember picture,overlay]%
+	    \node[xshift=-5mm,yshift=-2.8125mm,anchor=north east,align=right] at (current page.north east){#1};%
+	\end{tikzpicture}%
+}
+
+% ---------------------------------------------
+% recurring commands
+% ---------------------------------------------
+
+\renewcommand{\emph}[1]{{\color{blue}\textbf{#1}}}
+\newcommand{\deutsch}[1]{{\color{blue}(#1)}}
+\newcommand{\deutschertitel}[1]{{\tiny\deutsch{#1}}}
+\newcommand{\mycite}[1]{``#1''}
+\newcommand{\mycitebegin}{``}
+\newcommand{\myciteend}{''}
+\newcommand{\mytitlesource}[1]{{\tiny\normalfont\mbox{[#1]}}}
+\newcommand{\mysource}[1]{\ifthenelse{\equal{#1}{}}{}{\phantom{.}~\hfill~\mytitlesource{#1}}}
+\newcommand{\mypage}[1]{, p.~#1}
+\newcommand{\mypages}[1]{, pp.~#1}
+\newcommand{\todo}[1]{{\color{red}\textbf{[#1]}}}
+\newcommand{\fodo}[1]{\todo{\footnote{\todo{#1}}}}
+\newcommand{\todots}{\todo{\ldots}}
+\newcommand{\sem}[1]{\ensuremath{\llbracket #1 \rrbracket}} % semantics brackets
+\newcommand{\pand}{\wedge} % conjunction
+\newcommand{\por}{\vee} % disjunction
+\newcommand{\pnot}{\neg} % negation
+\newcommand{\pequals}{\leftrightarrow} % biconditional
+\newcommand{\npequals}{\nleftrightarrow} % exclusive disjunction
+\newcommand{\mequals}{\Leftrightarrow} % equivalence (meta-level)
+\newcommand{\pimplies}{\rightarrow} % conditional
+\newcommand{\mimplies}{\Rightarrow} % implication (meta-level)
+\newcommand{\defeq}{\vcentcolon=} % defining equals
+\newcommand{\power}[1]{\mathcal{P}(#1)} % power set
+\newcommand{\refslide}[1]{\hyperlink{#1}{(see Slide \autoref{#1})}} % link to slide
+\newcommand{\fs}[1]{\ensuremath{{\color{green}#1}}} % selected feature
+\newcommand{\fd}[1]{\ensuremath{{\color{red}#1}}} % deselected feature
+\newcommand{\clause}[1]{\ensuremath{{\color{red}#1}}} % clause in a CNF
+\newcommand{\cfg}[3][0]{\ensuremath({{\only<#1>{\color{green}}\{#2\}}, {\only<#1>{\color{red}}\{#3\}})}} % configuration
+\newcommand{\notleftright}{\mathrel{\ooalign{$\leftrightarrow$\cr\hidewidth$/$\hidewidth}}}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert} % absolute value
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+\newcommand{\light}[1]{{\color{lightgray}#1}}
+\newcommand{\lightsep}[1]{{\color{lightgray}|}}
+\newcommand{\presenter}[1]{\texorpdfstring{\underline{#1}}{#1}} % presenter
+\newcommand{\aff}[1]{\texorpdfstring{\light{$^{#1}_{\raisebox{2pt}{\normalsize ,}}$}}{,}} % affiliation
+\newcommand{\lastaff}[1]{\texorpdfstring{\light{$^{#1}$}}{}} % affiliation
+\newcommand{\svgsuffix}{.drawio} % can be used to load SVG files named <name><suffix>.svg
+\newcommand{\pw}{\paperwidth} % slide width
+\newcommand{\ph}{\paperheight} % slide height
+\newcommand{\lw}{\linewidth} % width of text box
+\renewcommand{\a}{$\Longrightarrow$\xspace} % draw an arrow
+\newcommand{\f}[3][t]{\begin{frame}[#1]{#2}#3\end{frame}} % frame
+\newcommand{\backup}{\f[plain,noframenumbering]{}{}} % begin backup slides
+\newcommand{\for}[3][\n]{\foreach #1 in {1,...,#2} {#3}} % for loop, useful for including animated images/SVG files named <name><number>.svg
+\newcommand{\add}[2]{\the\numexpr#1+#2\relax} % adds tw!o arguments, useful for offsetting animations and positions
+\newcommand{\mult}[2]{\the\numexpr#1*#2\relax} % adds two arguments, useful for offsetting animations and positions
+\newcommand{\ul}[2][]{\begin{itemize}[#1]\setlength\itemsep{5pt}#2\end{itemize}} % list of items
+\newcommand{\ulanim}[2][0]{\ul[<+(#1)->]{#2}} % animated list of items
+\newcommand{\li}[1]{\item #1} % list item
+\newcommand{\liskip}[1]{\item<.-> #1} % list item that is shown together with the previous list item
+\newcommand{\nest}[2][\a]{\ul{\liskip[#1] #2}} % a single nested list item
+\usepackage{textpos}
+\renewcommand{\b}[5][1-]{\only<#1>{\begin{textblock*}{#4}(#2,#3)#5\end{textblock*}}\def\boxx{#2}\def\boxy{#3}\def\boxwidth{#4}} % text box
+\renewcommand{\c}[3][1-]{\b[#1]{\boxx}{\dimexpr\boxy+#2\relax}{\boxwidth}{\centering#3}} % image caption
+\newcommand{\img}[8][1-]{\b[#1]{#2}{#3}{#4}{\centering\adjustimage{margin=5pt 0pt 5pt 0pt, max size={#6}{#7},#8}{#5}}} % include image
+\renewcommand{\i}[5][1-]{\img[#1]{#2}{#3}{#4}{#5}{\lw}{\lw}{}} % include image, adjusts to text box
+\newcommand{\ih}[4][1-]{\img[#1]{0pt}{#2}{.96\pw}{#4}{#3}{.73\ph}{}} % include image such that it fills the slide height
+\newcommand{\iw}[4][1-]{\img[#1]{0pt}{#2}{.96\pw}{#4}{\pw}{#3}{}} % include image such that it fills the slide width
+\newcommand{\ic}[2][1-]{\img[#1]{0pt}{0pt}{.96\pw}{#2}{\lw}{\lw}{}} % include image such that it fills the slide
+\newcommand{\svg}[5][1-]{\b[#1]{#3}{#4}{#5}{\centering\includesvg[inkscapelatex=false,width=\linewidth]{#2\svgsuffix}}} % include SVG files, requires Inkscape
+\newcommand{\svgs}[4]{\foreach \file/\num/\off in {#1} {\for{\num}{\svg[\add{\n}{\off}]{\file\n}{#2}{#3}{#4}}}} % include (multiple) SVG animations
+\newcommand{\eg}{e.g.,\xspace}
+\newcommand{\ie}{i.e.,\xspace}
+\newcommand{\cf}[1]{(cf. \autoref{#1})}
+\newcommand{\coloritem}[2][gray]{\item[\color{#1}$\bullet$] {\color{#1}#2}}
+
+% ---------------------------------------------
+% additional adjustments
+% ---------------------------------------------
+
+\usepackage{xspace}
+\usepackage{transparent}
+\usepackage{fontawesome5}
+\usepackage[loadonly]{enumitem}
+
+\newlist{items}{itemize}{2}
+\setlist[items]{leftmargin=*,label=\textbullet}
