@@ -12,3 +12,6 @@
 
 *.fdb_latexmk
 *.fls
+
+!pics/**/*.pdf
+_raw
