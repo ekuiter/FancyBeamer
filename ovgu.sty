@@ -1,0 +1,46 @@
+% =============================================
+% OVGU ADAPTIONS to FANCY BEAMER
+% =============================================
+
+% ---------------------------------------------
+% colors
+% ---------------------------------------------
+
+% OVGU colors: https://www.cd.ovgu.de/Logo_+Farbe_+Schrift/Farbe.html
+% FIN colors: https://www.cd.ovgu.de/Fakult%C3%A4ten/Informatik.html
+\definecolor{ovguaccent}{HTML}{4d4d4d}
+\definecolor{ovguaccenttwo}{HTML}{7a003f}
+\definecolor{ovgunaturalsciences}{HTML}{05a535}
+\definecolor{ovgumathematics}{HTML}{d13f58}
+\definecolor{ovguhumanities}{HTML}{f39100}
+\definecolor{ovgucomputerscience}{HTML}{0068b4}
+\definecolor{ovgumedicine}{HTML}{002d5c}
+\definecolor{ovgusystemsengineering}{HTML}{941680}
+\definecolor{ovgumechanicalengineering}{HTML}{009ee3}
+\definecolor{ovguelectricalengineering}{HTML}{94c12d}
+\definecolor{ovgueconomics}{HTML}{5d8ea6}
+
+% redefines colors used in fancybeamer
+\colorlet{red}{ovgumathematics}
+\colorlet{green}{ovgunaturalsciences}
+\colorlet{blue}{ovgucomputerscience}
+\colorlet{orange}{ovguhumanities}
+\colorlet{accent}{ovguaccent}
+\colorlet{accenttwo}{ovguaccenttwo}
+\ifdarkmode
+\colorlet{red}{red!90!white}
+\colorlet{green}{green!90!white}
+\colorlet{blue}{blue!90!white}
+\colorlet{orange}{orange!90!white}
+\colorlet{accent}{accent!25!darkgray}
+\colorlet{accenttwo}{accenttwo!25!darkgray}
+\fi
+
+% hack to force use of changed colors
+\UpdateBoxColor{definition}{orange}
+\UpdateBoxColor{example}{blue}
+\UpdateBoxColor{note}{red}
+
+% use official logos
+% \fancylogos{upb,upb-triangles}
+% \setpaths{{pics/}{../pics/}}
