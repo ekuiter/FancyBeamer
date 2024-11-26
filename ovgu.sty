@@ -2,8 +2,24 @@
 % OVGU ADAPTIONS to FANCY BEAMER
 % =============================================
 
+% usage:
+% \def\fancybeamer{../fancybeamer} % path to fancybeamer
+% \def\fancyimages{images} % path to additional images (if any)
+% \usepackage{\fancybeamer/ovgu} % include this file
+
+\ifcsname fancybeamer\endcsname%
+\usepackage{\fancybeamer/fancybeamer}%
+\ifcsname fancyimages\endcsname%
+\setpaths{{\fancybeamer/pics/logos/}{\fancybeamer/pics/my/}{\fancyimages/}}%
+\else%
+\setpaths{{\fancybeamer/pics/logos/}{\fancybeamer/pics/my/}}%
+\fi%
+\else%
+%
+\fi%
+
 % ---------------------------------------------
-% colors
+% corporate design
 % ---------------------------------------------
 
 % OVGU colors: https://www.cd.ovgu.de/Logo_+Farbe_+Schrift/Farbe.html
@@ -269,7 +285,7 @@
 \newcommand{\definelanguage}[2]{
 	\lstdefinelanguage{#1}{#2}
 	\lstnewenvironment{#1}[1][]{\lstset{language=#1,##1}}{}
-	\newtcblisting{#1tight}[2][]{uulm@tightboxstyle={top=-6pt,bottom=-6pt}{##2}{blue}{},listing only,listing options={language=#1,##1}}
+	\newtcblisting{#1tight}[2][]{fancy@tightboxstyle={top=-6pt,bottom=-6pt}{##2}{blue}{},listing only,listing options={language=#1,##1}}
 }
 
 % listing style inherited by all languages
@@ -356,7 +372,7 @@
 	\usebeamercolor[fg]{normal text}
 	\setbeamertemplate{background canvas}{
 		\begin{tikzpicture}[remember picture,overlay]
-			\shade[top color=ovgured,bottom color=ovguaccent,middle color=ovguaccent,vertical custom shading=65]
+			\shade[top color=ovguaccenttwo,bottom color=ovguaccent,middle color=ovguaccent,vertical custom shading=65]
 			([shift={(0pt,0pt)}]current page.north west)				rectangle
 			([shift={(\mydark@width\paperwidth,0pt)}]current page.south west);
 		\end{tikzpicture}
