@@ -23,7 +23,7 @@
 % 2024-01-19-SPL-Tseitin
 
 \maketitle[magdeburg-herrenkrug-bridge-2][180][~~\light{[Herrenkrug-Eisenbahnbrücke Magdeburg]}]
-% 2024-09-27-DBSE-PhD-Thesis
+% 2024-09-27-DBSE-PhD-Status
 
 \maketitle[magdeburg-jahrtausendturm][250][\light{[Jahrtausendturm Magdeburg]}]
 % 2023-02-22-SE-Tseitin
@@ -32,7 +32,7 @@
 % 2024-08-27-SoftVarE-Linux-Time-Travel
 
 \maketitle[paderborn-university][230][\transparent{.8}\colorbox{darkgray}{[Universität Paderborn]}]
-% 2024-08-27-SoftVarE-PhD-Thesis
+% 2024-08-27-SoftVarE-PhD-Status
 
 \maketitle[ulm-city][250][\transparent{.8}\colorbox{darkgray}{[Ulm]}]
 % 2023-07-19-Topics
@@ -44,5 +44,10 @@
 \maketitle[magdeburg-herrenkrug-bridge-1][157][~~\color{darkgray}{[Herrenkrug-Eisenbahnbrücke Magdeburg]}]
 % Thesis Topics?
 
-% todo: magdeburg-opernhaus
+\maketitle[magdeburg-elbauenpark][500][~~{[Elbauenpark Magdeburg]}]
+% thesis proposal?
+
+% magdeburg-wissenschaftshafen
+
+% magdeburg-herrenkrugsteg
 ```
