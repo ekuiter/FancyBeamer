@@ -43,13 +43,10 @@
 ## Unused
 
 ```
-
 \maketitle[magdeburg-elbauenpark][500][~~{[Elbauenpark Magdeburg]}]
 % thesis proposal?
 
 % magdeburg-wissenschaftshafen
 
 % magdeburg-herrenkrugsteg
-
-% thesis topics?
 ```
