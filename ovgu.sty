@@ -378,8 +378,22 @@
 	\setbeamertemplate{background canvas}{
 		\begin{tikzpicture}[remember picture,overlay]
 			\shade[top color=ovguaccenttwo,bottom color=ovguaccent,middle color=ovguaccent,vertical custom shading=65]
-			([shift={(0pt,0pt)}]current page.north west)				rectangle
+			([shift={(0pt,0pt)}]current page.north west) rectangle
 			([shift={(\mydark@width\paperwidth,0pt)}]current page.south west);
+		\end{tikzpicture}
+	}
+}
+\newcommand{\mydarkbottom}[2][.115]{
+	\def\mydark@height{#1}
+	\pgfmathsetmacro\mydark@textheight{\mydark@height-0.011}
+	\setbeamertemplate{background canvas}{
+		\begin{tikzpicture}[remember picture,overlay]
+			\shade[top color=ovguaccenttwo,bottom color=ovguaccent,middle color=ovguaccent,vertical custom shading=0]
+			([shift={(0pt,\mydark@height\paperheight)}]current page.south west) rectangle
+			([shift={(0pt,0pt)}]current page.south east);
+			\node[anchor=north west] at ([shift={(0pt,\mydark@textheight\paperheight)}]current page.south west) {%
+				\hspace{0.03\textwidth}\color{white}\small#2%
+			};
 		\end{tikzpicture}
 	}
 }
