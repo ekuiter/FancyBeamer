@@ -351,17 +351,10 @@
 % QR codes
 % ---------------------------------------------
 
-\newcommand{\usefancyqr}[1]{\usepackage{textpos}
+\usepackage{fancyqr}
 \makeatletter
-\def\input@path{{#1}}
+\newcommand{\enablefancyqr}{\renewcommand{\@minipagerestore}{\setlength{\parskip}{0pt}}}
 \makeatother
-\usepackage{fancyqr}}
-\newcommand{\enableqr}{\makeatletter
-\renewcommand{\@minipagerestore}{\setlength{\parskip}{0pt}}
-\makeatother}
-\newcommand{\disableqr}{\makeatletter
-\renewcommand{\@minipagerestore}{\setlength{\parskip}{1.5ex}}
-\makeatother}
 
 % ---------------------------------------------
 % darkly accented frames
