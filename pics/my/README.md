@@ -46,7 +46,8 @@
 \maketitle[magdeburg-elbauenpark][500][~~{[Elbauenpark Magdeburg]}]
 % thesis proposal?
 
-% magdeburg-wissenschaftshafen
+\maketitle[magdeburg-wissenschaftshafen][750][~~\light{[Wissenschaftshafen Magdeburg]}]
+% course paper?
 
 % magdeburg-herrenkrugsteg
 ```
