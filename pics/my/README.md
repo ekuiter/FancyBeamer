@@ -18,26 +18,29 @@
 % 2023-07-04-SAT-Tseitin
 \maketitle[magdeburg-elbe-1][900][\color{darkgray}{~~[Elbe, Magdeburg]}]
 
-% 2023-07-19-Topics
+% 2023-07-19-Thesis-Topics
 \maketitle[ulm-city][250][\transparent{.8}\colorbox{darkgray}{[Ulm]}]
 
 % 2024-01-19-SPL-Tseitin
 \maketitle[magdeburg-elbe-2][500][\color{darkgray}{~~[Elbe, Magdeburg]}]
 
-% 2024-02-07-FM-Complexity
+% 2024-02-07-VaMoS-FM-Complexity
 \maketitle[hohenwarthe-greenery][210][\transparent{.85}\colorbox{darkgray}{\light{[Weinbergsquelle, Hohenwarthe]}}]
 
-% 2024-04-11-Linux
+% 2024-04-11-FOSD-Linux
 \maketitle[alghero-seagull][210][{~~[Alghero, Italy]}]
 
 % 2024-08-27-SoftVarE-PhD-Status
 \maketitle[paderborn-university][230][\transparent{.8}\colorbox{darkgray}{[Universität Paderborn]}]
 
-% 2024-08-27-SoftVarE-Linux-Time-Travel
+% 2024-08-27-SoftVarE-Time-Travel
 \maketitle[magdeburg-skyline][65][\light{~~[Magdeburg]}]
 
 % 2024-09-27-DBSE-PhD-Status
 \maketitle[magdeburg-herrenkrug-bridge-2][180][~~\light{[Herrenkrug-Eisenbahnbrücke Magdeburg]}]
+
+% 2025-01-20-SPL-Linux
+\maketitle[braunschweig-city][810][{~~[Braunschweig]}]
 ```
 
 ## Unused
