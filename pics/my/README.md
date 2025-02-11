@@ -41,16 +41,19 @@
 
 % 2025-01-20-SPL-Linux
 \maketitle[braunschweig-city][810][{~~[Braunschweig]}]
+
+% 2025-01-27-Thesis-Topics
+\maketitle[magdeburg-herrenkrugsteg][810][~~{[Herrenkrugsteg Magdeburg]}]
+
+% 2025-02-04-VaMoS-SPL-Course
+\maketitle[magdeburg-wissenschaftshafen][750][~~\light{[Wissenschaftshafen Magdeburg]}]
+
+% 2025-02-13-Thesis-Proposal
+\maketitle[magdeburg-elbauenpark][500][~~{[Elbauenpark Magdeburg]}]
 ```
 
 ## Unused
 
 ```
-\maketitle[magdeburg-elbauenpark][500][~~{[Elbauenpark Magdeburg]}]
-% thesis proposal?
-
-\maketitle[magdeburg-wissenschaftshafen][750][~~\light{[Wissenschaftshafen Magdeburg]}]
-% course paper?
-
-% magdeburg-herrenkrugsteg
+...
 ```
