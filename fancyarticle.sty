@@ -1,0 +1,452 @@
+% =============================================
+% FANCY ARTICLE
+% a manually merged version of ovgu.sty and fancybeamer.sty, reduced to useful commands for typesetting articles
+% last updated on 2025-03-05
+% =============================================
+
+% ---------------------------------------------
+% import packages
+% ---------------------------------------------
+\usepackage{xargs} % used to define/renew commands with multiple optional parameters
+% \usepackage{color}
+\usepackage{tcolorbox} % used for color boxes (definition, example, note)
+% \usepackage{ifthen}
+
+% ---------------------------------------------
+% colors
+% ---------------------------------------------
+\colorlet{foreground}{black}
+\colorlet{background}{white}
+\colorlet{boxmix}{white}
+
+% ---------------------------------------------
+% color boxes
+% ---------------------------------------------
+\tcbset{%
+    % by definig styles, we avoid their replication
+    % #1: extra arguments, #2: title, #3: color of the frame, #4: padding, #5 boxname
+    fancy@basic-boxstyle/.style n args=5{
+        title={#2},
+        colframe=#3!30!boxmix,
+        coltitle=foreground,coltext=foreground,
+        before title={\setlength{\parskip}{0ex}\vphantom{/}\let\boxnumber\thetcbcounter\csname fancy@box@#5@titleprefix\endcsname},
+        after title={\let\boxnumber\thetcbcounter\csname fancy@box@#5@titlesuffix\endcsname},
+        before upper={\parskip\z@\relax},
+        fonttitle=\bfseries,
+        left=#4, right=#4, top=#4, bottom=#4, bottomtitle=-.5mm,
+        fonttitle=\sffamily\bfseries,
+        fontupper=\sffamily,
+        fontlower=\sffamily,
+        #1
+    },
+    % style definition for the normal boxes
+    % #1: extra arguments, #2: title, #3: color of the frame and background, #4: boxname
+    fancy@boxstyle/.style n args=4{fancy@basic-boxstyle={colback=#3!10!background,#1}{#2}{#3}{1mm}{#4}},
+    % style definition for their tight variant
+    % #1: extra arguments, #2: title, #3: color of the frame, #4: boxname
+    fancy@tightboxstyle/.style n args=4{fancy@basic-boxstyle={colback=background,#1}{#2}{#3}{0mm}{#4}}
+}
+
+% [optional prefix] | name | color | [optional suffix]
+\newcommandx\fancy@MakeNewBox[4][1={},4={}]{%
+    % in the definition #2 and #3 refer to the arguments of \fancy@MakeNewBox
+    % while ##1 and ##2 to refer to the arguments passed on to the new tcolorbox.
+    % therefore, with '\fancy@MakeNewBox{definition}{orange}', we create a new tcolorbox
+    % named 'definition' which wenn called with '\begin{definition}[top=10mm]{My title}...'
+    % will result in the option list 'fancy@boxstyle={top=10mm}{My title}{orange}'
+    % first we assure, that we can build this box
+    \newtcolorbox[auto counter,reset counter on overlays]{#2}[2][]{fancy@boxstyle={##1}{##2}{fancy@box@#2}{#2}}
+    % here, we re-create the old macros (e.g. '\mydefinition')
+    % 'capture=minipage' ensures their behavior is similar to the previous one (the default for
+    % tcbox would be hbox and no longer fill the width)
+    \expandafter\newtcbox\csname my#2\endcsname[2][]{capture=minipage,fancy@boxstyle={##1}{##2}{fancy@box@#2}{#2}}%
+    % now, we do the same for the tight-version of the boxes
+    \newtcolorbox[use counter from=#2]{#2tight}[2][]{fancy@tightboxstyle={##1}{##2}{fancy@box@#2}{#2}}%
+    \expandafter\newtcbox\csname my#2tight\endcsname[2][]{capture=minipage,fancy@tightboxstyle={##1}{##2}{fancy@box@#2}{#2}}%
+    % now, get the macros in effect:
+    \fancy@UpdateBoxSurround{#2}{#1}{#4}%
+    \fancy@UpdateBoxColor{#2}{#3}%
+}
+% like newBox but does not care if the box does already exist
+% [optional prefix] | name | color | [optional suffix]
+\newcommandx\fancy@DeclareBox[4][1={},4={}]{\csundef{#2}\csundef{end#2}\csundef{my#2}\csundef{#2tight}\csundef{end#2tight}\csundef{my#2tight}%
+\fancy@MakeNewBox[#1]{#2}{#3}[#4]}
+
+
+% name | prefix | suffix
+\def\fancy@UpdateBoxSurround#1#2#3{%
+\ifcsname #1\endcsname
+    \expandafter\def\csname fancy@box@#1@titleprefix\endcsname{#2}%
+    \expandafter\def\csname fancy@box@#1@titlesuffix\endcsname{#3}%
+\else
+    \PackageError{fancybeamer}{You can not set a box-prefix/-suffix for '#1' because there is no such box!}%
+\fi}
+
+\def\fancy@UpdateBoxPrefix#1#2{%
+\ifcsname #1\endcsname
+    \expandafter\def\csname fancy@box@#1@titleprefix\endcsname{#2}%
+\else
+    \PackageError{fancybeamer}{You can not set a box-prefix for '#1' because there is no such box!}%
+\fi}
+
+\def\fancy@UpdateBoxSuffix#1#2{%
+\ifcsname #1\endcsname
+    \expandafter\def\csname fancy@box@#1@titlesuffix\endcsname{#2}%
+\else
+    \PackageError{fancybeamer}{You can not set a box-suffix for '#1' because there is no such box!}%
+\fi}
+
+
+\def\fancy@UpdateBoxColor#1#2{%
+\ifcsname #1\endcsname
+    \colorlet{fancy@box@#1}{#2}%
+\else
+    \PackageError{fancybeamer}{You can not change the color for '#1' to '#2' because there is no such box!}
+\fi}
+
+\let\MakeNewBox\fancy@MakeNewBox
+\let\DeclareBox\fancy@DeclareBox
+\let\UpdateBoxColor\fancy@UpdateBoxColor
+\let\UpdateBoxPrefix\fancy@UpdateBoxPrefix
+\let\UpdateBoxSuffix\fancy@UpdateBoxSuffix
+\let\UpdateBoxSurround\fancy@UpdateBoxSurround
+
+% now we simply define the boxes by name and color
+% => \mydefinition and \mydefinitiontight
+% furthermore defines the environment \begin{definition}{<title>} ... \end{definition}
+\fancy@DeclareBox{definition}{orange}
+% => \myexample and \myexampletight
+% furthermore defines the environment \begin{example}{<title>} ... \end{example}
+\fancy@DeclareBox{example}{blue}
+% => \mynote and \mynotetight
+% furthermore defines the environment \begin{note}{<title>} ... \end{note}
+\fancy@DeclareBox{note}{red}
+
+% ---------------------------------------------
+% Pictures
+% ---------------------------------------------
+% GRAPHICSPATH
+\makeatletter
+\newcommand{\setpaths}[1]{
+	\appto\Ginput@path{#1} % for loading pictures
+	\def\input@path{#1} % for loading picture sources
+}
+\makeatother
+
+% ---------------------------------------------
+% corporate design
+% ---------------------------------------------
+
+% OVGU colors: https://www.cd.ovgu.de/Logo_+Farbe_+Schrift/Farbe.html
+% FIN colors: https://www.cd.ovgu.de/Fakult%C3%A4ten/Informatik.html
+\definecolor{ovguaccent}{HTML}{4d4d4d}
+\definecolor{ovguaccenttwo}{HTML}{7a003f}
+\definecolor{ovgunaturalsciences}{HTML}{05a535}
+\definecolor{ovgumathematics}{HTML}{d13f58}
+\definecolor{ovguhumanities}{HTML}{f39100}
+\definecolor{ovgucomputerscience}{HTML}{0068b4}
+\definecolor{ovgumedicine}{HTML}{002d5c}
+\definecolor{ovgusystemsengineering}{HTML}{941680}
+\definecolor{ovgumechanicalengineering}{HTML}{009ee3}
+\definecolor{ovguelectricalengineering}{HTML}{94c12d}
+\definecolor{ovgueconomics}{HTML}{5d8ea6}
+
+% redefines colors used in fancybeamer
+\colorlet{red}{ovgumathematics}
+\colorlet{green}{ovgunaturalsciences}
+\colorlet{blue}{ovgucomputerscience}
+\colorlet{orange}{ovguhumanities}
+\colorlet{accent}{ovguaccent}
+\colorlet{accenttwo}{ovguaccenttwo}
+
+% hack to force use of changed colors
+\UpdateBoxColor{definition}{orange}
+\UpdateBoxColor{example}{blue}
+\UpdateBoxColor{note}{red}
+
+% ---------------------------------------------
+% feature diagrams
+% ---------------------------------------------
+
+\usepackage{xstring}
+\usepackage{forest}
+\usepackage{xcolor}
+
+\usetikzlibrary{angles,tikzmark,arrows,positioning}
+\definecolor{drawColor}{RGB}{128 128 128}
+
+\newcommand{\circleSize}{0.175em}
+\newcommand{\angleSize}{0.75em}
+
+\forestset{
+	/tikz/mandatory/.style={
+		circle,fill=drawColor,
+		draw=drawColor,
+		inner sep=\circleSize
+	},
+	/tikz/optional/.style={
+		circle,
+		fill=white,
+		draw=drawColor,
+		inner sep=\circleSize
+	},
+	featureDiagram/.style={
+		for tree={
+			text depth = 0,
+			parent anchor = south,
+			child anchor = north,
+			draw = drawColor,
+			edge = {draw=drawColor},
+		}
+	},
+	featureDiagramEmpty/.style={
+	},
+	/tikz/abstract/.style={
+		fill = blue!85!cyan!5,
+		draw = drawColor
+	},
+	/tikz/concrete/.style={
+		fill = blue!85!cyan!20,
+		draw = drawColor
+	},
+	mandatory/.style={
+		edge label={node [mandatory] {} }
+	},
+	optional/.style={
+		edge label={node [optional] {} }
+	},
+	or/.style={
+		tikz+={
+			\path (.parent) coordinate (A) -- (!u.children) coordinate (B) -- (!ul.parent) coordinate (C) pic[fill=drawColor, angle radius=\angleSize]{angle};
+		}	
+	},
+	/tikz/or/.style={
+	},
+	alternative/.style={
+		tikz+={
+			\path (.parent) coordinate (A) -- (!u.children) coordinate (B) -- (!ul.parent) coordinate (C) pic[draw=drawColor, angle radius=\angleSize]{angle};
+		}	
+	},
+	/tikz/alternative/.style={
+	},
+	/tikz/placeholder/.style={
+	},
+	collapsed/.style={
+		rounded corners,
+		no edge,
+		for tree={
+			fill opacity=0,
+			draw opacity=0,
+			l = 0em,
+		}
+	},
+	/tikz/hiddenNodes/.style={
+		midway,
+		rounded corners,
+		draw=drawColor,
+		fill=white,
+		minimum size = 1.2em,
+		minimum width = 0.8em,
+		scale=0.9
+	},
+}
+
+\newcommand{\legend}{
+	\matrix [draw=drawColor,anchor=north west] at (current bounding box.north east) {
+		\node [label=center:\underline{Legend:}] {}; \\
+		\node [abstract,label=right:Abstract Feature] {}; \\
+		\node [concrete,label=right:Concrete Feature] {}; \\
+		\node [mandatory,label=right:Mandatory] {}; \\
+		\node [optional,label=right:Optional] {}; \\
+			\filldraw[drawColor] (0.1,0) - +(-0,-0.2) - +(0.2,-0.2)- +(0.1,0);
+			\draw[drawColor] (0.1,0) -- +(-0.2, -0.4);
+			\draw[drawColor] (0.1,0) -- +(0.2,-0.4);
+			\fill[drawColor] (0,-0.2) arc (240:300:0.2);
+		\node [or,label=right:Or Group] {}; \\
+		\draw[drawColor] (0.1,0) -- +(-0.2, -0.4);
+			\draw[drawColor] (0.1,0) -- +(0.2,-0.4);
+			\draw[drawColor] (0,-0.2) arc (240:300:0.2);
+		\node [alternative,label=right:Alternative Group] {}; \\
+	};
+}
+
+\newcommand{\featureDiagramWithLegend}[1]{
+	\begin{forest}
+		featureDiagram[#1]
+		\matrix [anchor=north west] at (current bounding box.north east) {
+			\node [placeholder] {}; \\
+		};
+		{\small\legend}
+	\end{forest}
+}
+
+\newcommand{\featureDiagram}[1]{
+	\begin{forest}
+		featureDiagram[#1]
+	\end{forest}
+}
+
+\newcommand{\featureDiagramLegend}{
+	\begin{forest}
+		featureDiagramEmpty[]
+		{\small\legend}
+	\end{forest}
+}
+
+% ---------------------------------------------
+% code listings
+% ---------------------------------------------
+
+\usepackage{listings}
+\usepackage[normalem]{ulem}
+\tcbuselibrary{listings}
+
+\newcommand{\definelanguage}[2]{
+	\lstdefinelanguage{#1}{#2}
+	\lstnewenvironment{#1}[1][]{\lstset{language=#1,##1}}{}
+	\newtcblisting{#1tight}[2][]{fancy@tightboxstyle={top=-6pt,bottom=-6pt}{##2}{blue}{},listing only,listing options={language=#1,##1}}
+}
+
+% listing style inherited by all languages
+\lstset{
+	numbers=none, % where to put the line-numbers
+	showspaces=false, % show spaces with underscores
+	showstringspaces=false, % underline spaces within strings
+	showtabs=false, % show tabs within strings with underscores
+	tabsize=2, % sets default tabsize to 2 spaces
+	breaklines=true, % sets automatic line breaking
+	breakatwhitespace=false,
+	columns=fullflexible,
+	commentstyle=\color{green},
+	keywordstyle=\color{blue},
+	stringstyle=\color{red},
+    basicstyle=\ttfamily
+}
+
+% language-specific styles
+\definelanguage{code}{
+	moredelim=**[is][\color{red}]{@}{@},
+	moredelim=**[is][\color{green}]{?}{?},
+	moredelim=**[is][\color{blue}]{~}{~},
+	moredelim=[is][\sout]{|}{|},
+	literate={-}{{-}}1,
+}
+
+\definelanguage{uvl}{
+	alsoletter={=, >, |},
+	morekeywords={features, constraints, namespace, mandatory, optional, or, alternative, abstract, =>, |}
+}
+
+\definelanguage{dimacs}{
+	alsoletter={0},
+	morekeywords={p, cnf, 0},
+	morecomment=[f]{c},
+}
+
+\definelanguage{kconfig}{
+	keepspaces=true,
+	morekeywords={config, bool, default, if, help, def_bool, depends, on, select},
+	morecomment=[f]{\#},
+	morestring=*[d]{"},
+	literate={-}{{-}}1,
+}
+
+\definelanguage{cpp}{
+	language=C++,
+	moredelim=**[is][\color{green}\bfseries\itshape]{~}{~},
+	moredelim=[is][\sout]{|}{|},
+}
+
+\definelanguage{shell}{
+	language=bash,
+	moredelim=**[is][\color{red}]{@}{@},
+	moredelim=**[is][\color{green}]{?}{?},
+	moredelim=**[is][\color{blue}]{~}{~},
+}
+
+% ---------------------------------------------
+% QR codes
+% ---------------------------------------------
+
+\usepackage{fancyqr}
+
+% ---------------------------------------------
+% recurring commands
+% ---------------------------------------------
+
+\renewcommand{\emph}[1]{{\color{blue}\textbf{#1}}}
+\newcommand{\deutsch}[1]{{\color{blue}(#1)}}
+\newcommand{\deutschertitel}[1]{{\tiny\deutsch{#1}}}
+\newcommand{\mycite}[1]{``#1''}
+\newcommand{\mycitebegin}{``}
+\newcommand{\myciteend}{''}
+\newcommand{\mytitlesource}[1]{{\tiny\normalfont\mbox{[#1]}}}
+\newcommand{\mysource}[1]{\ifthenelse{\equal{#1}{}}{}{\phantom{.}~\hfill~\mytitlesource{#1}}}
+\newcommand{\mypage}[1]{, p.~#1}
+\newcommand{\mypages}[1]{, pp.~#1}
+\newcommand{\todo}[1]{{\color{red}\textbf{[#1]}}}
+\newcommand{\fodo}[1]{\todo{\footnote{\todo{#1}}}}
+\newcommand{\todots}{\todo{\ldots}}
+\newcommand{\sem}[1]{\ensuremath{\llbracket #1 \rrbracket}} % semantics brackets
+\newcommand{\pand}{\wedge} % conjunction
+\newcommand{\por}{\vee} % disjunction
+\newcommand{\pnot}{\neg} % negation
+\newcommand{\pequals}{\leftrightarrow} % biconditional
+\newcommand{\npequals}{\nleftrightarrow} % exclusive disjunction
+\newcommand{\mequals}{\Leftrightarrow} % equivalence (meta-level)
+\newcommand{\pimplies}{\rightarrow} % conditional
+\newcommand{\mimplies}{\Rightarrow} % implication (meta-level)
+\newcommand{\defeq}{\vcentcolon=} % defining equals
+\newcommand{\power}[1]{\mathcal{P}(#1)} % power set
+\newcommand{\refslide}[1]{\hyperlink{#1}{(see Slide \autoref{#1})}} % link to slide
+\newcommand{\fs}[1]{\ensuremath{{\color{green}#1}}} % selected feature
+\newcommand{\fd}[1]{\ensuremath{{\color{red}#1}}} % deselected feature
+\newcommand{\clause}[1]{\ensuremath{{\color{red}#1}}} % clause in a CNF
+\newcommand{\cfg}[3][0]{\ensuremath({{\only<#1>{\color{green}}\{#2\}}, {\only<#1>{\color{red}}\{#3\}})}} % configuration
+\newcommand{\notleftright}{\mathrel{\ooalign{$\leftrightarrow$\cr\hidewidth$/$\hidewidth}}}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert} % absolute value
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+\newcommand{\light}[1]{{\color{lightgray}#1}}
+\newcommand{\lightsep}[1]{{\color{lightgray}|}}
+\newcommand{\presenter}[1]{\texorpdfstring{\underline{#1}}{#1}} % presenter
+\newcommand{\aff}[1]{\texorpdfstring{\light{$^{#1}_{\raisebox{2pt}{\normalsize ,}}$}}{,}} % affiliation
+\newcommand{\lastaff}[1]{\texorpdfstring{\light{$^{#1}$}}{}} % affiliation
+\newcommand{\svgsuffix}{.drawio} % can be used to load SVG files named <name><suffix>.svg
+\newcommand{\pw}{\paperwidth} % slide width
+\newcommand{\ph}{\paperheight} % slide height
+\newcommand{\lw}{\linewidth} % width of text box
+\renewcommand{\a}{$\Longrightarrow$\xspace} % draw an arrow
+\newcommand{\f}[3][t]{\begin{frame}[#1]{#2}#3\end{frame}} % frame
+\newcommand{\backup}{\f[plain,noframenumbering]{}{}} % begin backup slides
+\newcommand{\for}[3][\n]{\foreach #1 in {1,...,#2} {#3}} % for loop, useful for including animated images/SVG files named <name><number>.svg
+\newcommand{\add}[2]{\the\numexpr#1+#2\relax} % adds tw!o arguments, useful for offsetting animations and positions
+\newcommand{\mult}[2]{\the\numexpr#1*#2\relax} % adds two arguments, useful for offsetting animations and positions
+\newcommand{\ul}[2][]{\begin{itemize}[#1]\setlength\itemsep{5pt}#2\end{itemize}} % list of items
+\newcommand{\ulanim}[2][0]{\ul[<+(#1)->]{#2}} % animated list of items
+\newcommand{\li}[1]{\item #1} % list item
+\newcommand{\liskip}[1]{\item<.-> #1} % list item that is shown together with the previous list item
+\newcommand{\nest}[2][\a]{\ul{\liskip[#1] #2}} % a single nested list item
+\usepackage{textpos}
+\renewcommand{\b}[5][1-]{\only<#1>{\begin{textblock*}{#4}(#2,#3)#5\end{textblock*}}\def\boxx{#2}\def\boxy{#3}\def\boxwidth{#4}} % text box
+\renewcommand{\c}[3][1-]{\b[#1]{\boxx}{\dimexpr\boxy+#2\relax}{\boxwidth}{\centering#3}} % image caption
+\newcommand{\img}[8][1-]{\b[#1]{#2}{#3}{#4}{\centering\adjustimage{margin=5pt 0pt 5pt 0pt, max size={#6}{#7},#8}{#5}}} % include image
+\renewcommand{\i}[5][1-]{\img[#1]{#2}{#3}{#4}{#5}{\lw}{\lw}{}} % include image, adjusts to text box
+\newcommand{\ih}[4][1-]{\img[#1]{0pt}{#2}{.96\pw}{#4}{#3}{.73\ph}{}} % include image such that it fills the slide height
+\newcommand{\iw}[4][1-]{\img[#1]{0pt}{#2}{.96\pw}{#4}{\pw}{#3}{}} % include image such that it fills the slide width
+\newcommand{\ic}[2][1-]{\img[#1]{0pt}{0pt}{.96\pw}{#2}{\lw}{\lw}{}} % include image such that it fills the slide
+\newcommand{\svg}[5][1-]{\b[#1]{#3}{#4}{#5}{\centering\includesvg[inkscapelatex=false,width=\linewidth]{#2\svgsuffix}}} % include SVG files, requires Inkscape
+\newcommand{\svgs}[4]{\foreach \file/\num/\off in {#1} {\for{\num}{\svg[\add{\n}{\off}]{\file\n}{#2}{#3}{#4}}}} % include (multiple) SVG animations
+\newcommand{\eg}{e.g.,\xspace}
+\newcommand{\ie}{i.e.,\xspace}
+\newcommand{\cf}[1]{(cf. \autoref{#1})}
+\newcommand{\coloritem}[2][gray]{\item[\color{#1}$\bullet$] {\color{#1}#2}}
+\newcommand{\mystack}[6]{\csname #1\endcsname[sharp corners=south]{#2}{#3}\vspace*{-1.6ex}\csname #4\endcsname[sharp corners=north]{#5}{#6}}
+\newcommand{\mydoublestack}[9]{\csname #1\endcsname[sharp corners=south]{#2}{#3}\vspace*{-1.6ex}\csname #4\endcsname[sharp corners]{#5}{#6}\vspace*{-1.6ex}\csname #7\endcsname[sharp corners=north]{#8}{#9}}
+\newcommand{\mybox}[2][]{\mydefinitiontight[boxrule=0pt,colframe=white,#1]{}{#2}}
+
+% ---------------------------------------------
+% additional adjustments
+% ---------------------------------------------
+
+\usepackage{fontawesome5}
