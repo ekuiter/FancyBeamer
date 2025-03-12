@@ -55,5 +55,7 @@
 ## Unused
 
 ```
-...
+\maketitle[magdeburg-branches][400][\transparent{.8}\colorbox{darkgray}{[BlocSchmiede Magdeburg]}]
+
+\maketitle[magdeburg-elbe-3][620][\transparent{.8}\colorbox{darkgray}{[Elbe, Magdeburg]}]
 ```
