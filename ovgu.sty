@@ -487,7 +487,7 @@
 \newcommand{\li}[1]{\item #1} % list item
 \newcommand{\liskip}[1]{\item<.-> #1} % list item that is shown together with the previous list item
 \newcommand{\nest}[2][\a]{\ul{\liskip[#1] #2}} % a single nested list item
-\usepackage{textpos}
+\usepackage[absolute,overlay]{textpos}
 \renewcommand{\b}[5][1-]{\only<#1>{\begin{textblock*}{#4}(#2,#3)#5\end{textblock*}}\def\boxx{#2}\def\boxy{#3}\def\boxwidth{#4}} % text box
 \renewcommand{\c}[3][1-]{\b[#1]{\boxx}{\dimexpr\boxy+#2\relax}{\boxwidth}{\centering#3}} % image caption
 \newcommand{\img}[8][1-]{\b[#1]{#2}{#3}{#4}{\centering\adjustimage{margin=5pt 0pt 5pt 0pt, max size={#6}{#7},#8}{#5}}} % include image
