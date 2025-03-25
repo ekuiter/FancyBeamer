@@ -45,11 +45,14 @@
 % 2025-01-27-Thesis-Topics
 \maketitle[magdeburg-herrenkrugsteg][810][~~{[Herrenkrugsteg Magdeburg]}]
 
-% 2025-02-04-VaMoS-SPL-Course
+% 2025-02-04-SPL-Course
 \maketitle[magdeburg-wissenschaftshafen][750][~~\light{[Wissenschaftshafen Magdeburg]}]
 
 % 2025-02-13-Thesis-Proposal
 \maketitle[magdeburg-elbauenpark][500][~~{[Elbauenpark Magdeburg]}]
+
+% 2025-03-26-Differencing
+\maketitle[magdeburg-elbe-3][620][\transparent{.8}\colorbox{darkgray}{[Elbe, Magdeburg]}]
 ```
 
 ## Unused
@@ -57,6 +60,4 @@
 ```
 \maketitle[magdeburg-branches][400][\transparent{.8}\colorbox{darkgray}{[BlocSchmiede Magdeburg]}]
 
-\maketitle[magdeburg-elbe-3][620][\transparent{.8}\colorbox{darkgray}{[Elbe, Magdeburg]}]
-% differencing?
 ```
