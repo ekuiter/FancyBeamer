@@ -504,7 +504,13 @@
 \newcommand{\mystack}[6]{\csname #1\endcsname[sharp corners=south]{#2}{#3}\vspace*{-1.6ex}\csname #4\endcsname[sharp corners=north]{#5}{#6}}
 \newcommand{\mydoublestack}[9]{\csname #1\endcsname[sharp corners=south]{#2}{#3}\vspace*{-1.6ex}\csname #4\endcsname[sharp corners]{#5}{#6}\vspace*{-1.6ex}\csname #7\endcsname[sharp corners=north]{#8}{#9}}
 \newcommand{\mybox}[2][]{\mydefinitiontight[boxrule=0pt,colframe=white,#1]{}{#2}}
-
+\newcommand{\roundpic}[4][]{
+  \tikz\node [circle, minimum width = #2,
+    path picture = {
+      \node [#1] at (path picture bounding box.center) {
+        \includegraphics[width=#3]{#4}};
+    }] {};}
+	
 % ---------------------------------------------
 % additional adjustments
 % ---------------------------------------------
