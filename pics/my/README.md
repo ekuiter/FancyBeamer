@@ -13,7 +13,7 @@
 \maketitle[magdeburg-jahrtausendturm][250][\light{[Jahrtausendturm Magdeburg]}]
 
 % 2023-02-22-SE-variED
-\maketitle[magdeburg-dom][180][\light{[Magdeburger Dom]}]
+\maketitle[magdeburg-dom-1][180][\light{[Magdeburger Dom]}]
 
 % 2023-07-04-SAT-Tseitin
 \maketitle[magdeburg-elbe-1][900][\color{darkgray}{~~[Elbe, Magdeburg]}]
@@ -53,11 +53,13 @@
 
 % 2025-03-26-Differencing
 \maketitle[magdeburg-elbe-3][620][\transparent{.8}\colorbox{darkgray}{[Elbe, Magdeburg]}]
+
+% 2025-09-02-SPLC-Doctoral-Symposium
+\maketitle[magdeburg-dom-2][600][\color{darkgray}{~~{[Magdeburger Dom]}}]
 ```
 
 ## Unused
 
 ```
 \maketitle[magdeburg-branches][400][\transparent{.8}\colorbox{darkgray}{[BlocSchmiede Magdeburg]}]
-
 ```
