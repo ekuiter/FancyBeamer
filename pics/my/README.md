@@ -56,6 +56,9 @@
 
 % 2025-09-02-SPLC-Doctoral-Symposium
 \maketitle[magdeburg-dom-2][600][\color{darkgray}{~~{[Magdeburger Dom]}}]
+
+% 2025-09-17-ISF-PhD-Status
+\maketitle[braunschweig-tower][1000][~~\light{[TU Braunschweig]}]
 ```
 
 ## Unused
