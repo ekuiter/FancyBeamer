@@ -59,6 +59,9 @@
 
 % 2025-09-17-ISF-PhD-Status
 \maketitle[braunschweig-tower][1000][~~\light{[TU Braunschweig]}]
+
+% 2025-10-06-DBSE-PhD-Status
+\maketitle[magdeburg-flowers][950][\transparent{.8}\colorbox{darkgray}{[Elbauenpark Magdeburg]}]
 ```
 
 ## Unused
