@@ -49,7 +49,7 @@
 \maketitle[magdeburg-wissenschaftshafen][750][~~\light{[Wissenschaftshafen Magdeburg]}]
 
 % 2025-02-13-Thesis-Proposal
-\maketitle[magdeburg-elbauenpark][500][~~{[Elbauenpark Magdeburg]}]
+\maketitle[magdeburg-elbauenpark-1][500][~~{[Elbauenpark Magdeburg]}]
 
 % 2025-03-26-Differencing
 \maketitle[magdeburg-elbe-3][620][\transparent{.8}\colorbox{darkgray}{[Elbe, Magdeburg]}]
@@ -62,10 +62,18 @@
 
 % 2025-10-06-DBSE-PhD-Status
 \maketitle[magdeburg-flowers][950][\transparent{.8}\colorbox{darkgray}{[Elbauenpark Magdeburg]}]
+
+% SE-Linux
+\maketitle[magdeburg-christmas-2][850][\transparent{.8}\colorbox{darkgray}{[Bastion Cleve Magdeburg]}]
+
+% ICSE-Linux
+\maketitle[magdeburg-elbauenpark-3][710][~~{[Elbauenpark Magdeburg]}]
 ```
 
 ## Unused
 
 ```
 \maketitle[magdeburg-branches][400][\transparent{.8}\colorbox{darkgray}{[BlocSchmiede Magdeburg]}]
+\maketitle[magdeburg-elbauenpark-2][500][~~{[Elbauenpark Magdeburg]}]
+\maketitle[magdeburg-christmas-1][0][~~{[Bastion Cleve Magdeburg]}]
 ```
