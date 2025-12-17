@@ -64,6 +64,9 @@
 \maketitle[magdeburg-flowers][950][\transparent{.8}\colorbox{darkgray}{[Elbauenpark Magdeburg]}]
 
 % todo: add dates
+% PhD-Students-Day
+\maketitle[magdeburg-elbauenpark-2][430][~~{[Elbauenpark Magdeburg]}]
+
 % SE-Linux
 \maketitle[magdeburg-christmas-2][850][\transparent{.8}\colorbox{darkgray}{[Bastion Cleve Magdeburg]}]
 
@@ -81,7 +84,6 @@
 
 ```
 \maketitle[magdeburg-branches][400][\transparent{.8}\colorbox{darkgray}{[BlocSchmiede Magdeburg]}]
-\maketitle[magdeburg-elbauenpark-2][500][~~{[Elbauenpark Magdeburg]}]
 \maketitle[magdeburg-elbauenpark-4][600][~~{[Elbauenpark Magdeburg]}]
-\maketitle[magdeburg-christmas-1][0][~~{[Bastion Cleve Magdeburg]}]
+\maketitle[magdeburg-christmas-1][0][\transparent{.8}\colorbox{darkgray}{[Bastion Cleve Magdeburg]}]
 ```
