@@ -63,11 +63,18 @@
 % 2025-10-06-DBSE-PhD-Status
 \maketitle[magdeburg-flowers][950][\transparent{.8}\colorbox{darkgray}{[Elbauenpark Magdeburg]}]
 
+% todo: add dates
 % SE-Linux
 \maketitle[magdeburg-christmas-2][850][\transparent{.8}\colorbox{darkgray}{[Bastion Cleve Magdeburg]}]
 
 % ICSE-Linux
-\maketitle[magdeburg-elbauenpark-3][710][~~{[Elbauenpark Magdeburg]}]
+\maketitle[magdeburg-stadtpark][900][\transparent{.8}\colorbox{darkgray}{[Stadtpark Magdeburg]}]
+
+% ICSE-Torte
+\maketitle[magdeburg-werder][680][\transparent{.8}\colorbox{darkgray}{[Werder Magdeburg]}]
+
+% ICSE-Time-Travel
+\maketitle[magdeburg-elbauenpark-3][650][~~{[Elbauenpark Magdeburg]}]
 ```
 
 ## Unused
@@ -75,5 +82,6 @@
 ```
 \maketitle[magdeburg-branches][400][\transparent{.8}\colorbox{darkgray}{[BlocSchmiede Magdeburg]}]
 \maketitle[magdeburg-elbauenpark-2][500][~~{[Elbauenpark Magdeburg]}]
+\maketitle[magdeburg-elbauenpark-4][600][~~{[Elbauenpark Magdeburg]}]
 \maketitle[magdeburg-christmas-1][0][~~{[Bastion Cleve Magdeburg]}]
 ```
