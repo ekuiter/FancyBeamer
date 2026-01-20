@@ -384,14 +384,14 @@
 }
 \newcommand{\mydarkbottom}[2][.115]{
 	\def\mydark@height{#1}
-	\pgfmathsetmacro\mydark@textheight{\mydark@height-0.011}
+	\pgfmathsetmacro\mydark@textheight{\mydark@height-0.016}
 	\setbeamertemplate{background canvas}{
 		\begin{tikzpicture}[remember picture,overlay]
-			\shade[top color=gray,bottom color=ovguaccent,middle color=ovguaccent,vertical custom shading=0]
+			\shade[top color=white,bottom color=gray]
 			([shift={(0pt,\mydark@height\paperheight)}]current page.south west) rectangle
 			([shift={(0pt,0pt)}]current page.south east);
 			\node[anchor=north west] at ([shift={(0pt,\mydark@textheight\paperheight)}]current page.south west) {%
-				\hspace{0.03\textwidth}\color{white}\small#2%
+				\hspace{0.03\textwidth}\color{accent}\footnotesize#2%
 			};
 		\end{tikzpicture}
 	}
@@ -418,6 +418,54 @@
   }
 }
 \makeatother
+
+% ---------------------------------------------
+% bottom navigation
+% ---------------------------------------------
+
+% todo: create hyperlinks
+
+\newlength{\boldwidth}
+\newcommand{\myfakebold}[1]{%
+  \settowidth{\boldwidth}{\textbf{#1}}% measure width of bold text
+  \makebox[\boldwidth][c]{#1}% typeset normal text in that width
+}
+\newif\ifnavigationincludesubsubsection
+\navigationincludesubsubsectiontrue % \navigationincludesubsubsectionfalse to disable the inclusion of \subsubsection titles in navigation
+\newcommand{\mynavigationitem}[1]{{%
+	\ifthenelse{\equal{\my@navigationitem}{#1}}%
+		{\color{ovguaccenttwo}\hyperlink{#1}{\textbf{#1}}\ifnum\thesubsubsection=0\else\ifnavigationincludesubsubsection\ -- \insertsubsubsection{}\fi\fi}%
+		{\hyperlink{#1}{\myfakebold{#1}}}}}
+\newcommand{\mynavigationsep}{{~{\color{black!30!lightgray}$\rightarrow$}~}}
+\newcommand{\mynavigationitems}{} % override in presentation
+\newcommand{\mynavigationdonehypertargets}{} % empty initially
+\newcommand{\createhypertargetonce}[1]{%
+  % Check if #1 is already in \mynavigationdonehypertargets
+  \IfSubStr{\mynavigationdonehypertargets}{#1}{%
+    % already done → do nothing
+  }{%
+    % not done → create target
+    \hypertarget{#1}{}%
+    % add to done list
+    \edef\mynavigationdonehypertargets{\mynavigationdonehypertargets,#1}%
+  }%
+}
+\newcommand{\mynavigation}[1]{%
+  \makeatletter
+  \def\my@navigationitem{#1}%
+  % only create hypertarget once
+  \createhypertargetonce{#1}%
+  % loop over items if not empty
+  \edef\@tmp{\mynavigationitems}%
+  \ifx\@tmp\@empty
+  \else
+    \foreach \item [count=\xi] in \mynavigationitems {%
+      \ifnum\xi>1 \mynavigationsep\fi
+      \mynavigationitem{\item}%
+    }%
+  \fi
+  \makeatother
+}
 
 % ---------------------------------------------
 % frame headers
