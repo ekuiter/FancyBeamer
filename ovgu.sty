@@ -561,6 +561,21 @@
 \makeatletter\fancy@DeclareBox{gray}{gray}\makeatother
 
 % ---------------------------------------------
+% visibility and emphasis helpers for TikZ
+% ---------------------------------------------
+
+\tikzset{
+    invisible/.style={opacity=0},
+    visible on/.style={alt={#1{}{invisible}}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}}%
+  	},
+	emphasize node/.style={red},
+	emphasize/.style={red, line width=1.5pt},
+	emphasize arrow/.style={red, line width=1.5pt, -{Latex[length=1.5mm]}}
+}
+
+% ---------------------------------------------
 % additional adjustments
 % ---------------------------------------------
 
