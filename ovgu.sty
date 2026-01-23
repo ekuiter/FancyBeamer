@@ -387,7 +387,7 @@
 	\pgfmathsetmacro\mydark@textheight{\mydark@height-0.016}
 	\setbeamertemplate{background canvas}{
 		\begin{tikzpicture}[remember picture,overlay]
-			\shade[top color=white,bottom color=gray]
+			\shade[top color=white,bottom color=gray,middle color=lightgray,vertical custom shading=45]
 			([shift={(0pt,\mydark@height\paperheight)}]current page.south west) rectangle
 			([shift={(0pt,0pt)}]current page.south east);
 			\node[anchor=north west] at ([shift={(0pt,\mydark@textheight\paperheight)}]current page.south west) {%
