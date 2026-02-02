@@ -63,10 +63,10 @@
 % 2025-10-06-DBSE-PhD-Status
 \maketitle[magdeburg-flowers][950][\transparent{.8}\colorbox{darkgray}{[Elbauenpark Magdeburg]}]
 
-% todo: add dates
-% PhD-Students-Day
+% 2026-02-01-PhD-Student-Day
 \maketitle[magdeburg-elbauenpark-2][430][~~{[Elbauenpark Magdeburg]}]
 
+% todo: add dates
 % SE-Linux
 \maketitle[magdeburg-christmas-2][850][\transparent{.8}\colorbox{darkgray}{[Bastion Cleve Magdeburg]}]
 
