@@ -66,18 +66,17 @@
 % 2026-02-01-PhD-Student-Day
 \maketitle[magdeburg-elbauenpark-2][430][~~{[Elbauenpark Magdeburg]}]
 
-% todo: add dates
-% SE-Linux
+% 2026-02-25-SE-Linux
 \maketitle[magdeburg-christmas-2][850][\transparent{.8}\colorbox{darkgray}{[Bastion Cleve Magdeburg]}]
 
-% ICSE-Linux
-\maketitle[magdeburg-stadtpark][900][\transparent{.8}\colorbox{darkgray}{[Stadtpark Magdeburg]}]
+% 2026-04-15-ICSE-Time-Travel
+\maketitle[magdeburg-elbauenpark-3][650][~~{[Elbauenpark Magdeburg]}]
 
-% ICSE-Torte
+% 2026-04-17-ICSE-Torte
 \maketitle[magdeburg-werder][680][\transparent{.8}\colorbox{darkgray}{[Werder Magdeburg]}]
 
-% ICSE-Time-Travel
-\maketitle[magdeburg-elbauenpark-3][650][~~{[Elbauenpark Magdeburg]}]
+% 2026-04-17-ICSE-Linux
+\maketitle[magdeburg-stadtpark][900][\transparent{.8}\colorbox{darkgray}{[Stadtpark Magdeburg]}]
 ```
 
 ## Unused
