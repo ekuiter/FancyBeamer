@@ -77,6 +77,9 @@
 
 % 2026-04-17-ICSE-Linux
 \maketitle[magdeburg-stadtpark][900][\transparent{.8}\colorbox{darkgray}{[Stadtpark Magdeburg]}]
+
+% 2026-10-06-ISF-Health
+\maketitle[magdeburg-elbauenpark-5][700][\transparent{.8}\colorbox{darkgray}{[Elbauenpark Magdeburg]}]
 ```
 
 ## Unused
